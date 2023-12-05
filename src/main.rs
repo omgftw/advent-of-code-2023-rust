@@ -1,6 +1,8 @@
-use clap::Parser;
-
 mod day1;
+#[cfg(test)]
+mod tests;
+
+use clap::Parser;
 
 #[derive(Debug, Parser)]
 struct Args {
