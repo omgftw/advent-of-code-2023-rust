@@ -1,7 +1,6 @@
 use lazy_static::lazy_static;
 use std::collections::HashMap;
-use std::fs::read;
-use std::io::BufRead;
+use std::fs;
 
 lazy_static! {
     static ref WORDS: HashMap<&'static str, i32> = {
@@ -37,13 +36,16 @@ pub(crate) fn words_to_num(string: &str) -> String {
     result
 }
 
-pub(crate) fn process_lines(mut line: String, part2: bool) -> i32 {
+pub(crate) fn process_lines(line: &str, part2: bool) -> i32 {
+        let output: String;
         if part2 {
-            line = words_to_num(&line);
+            output = words_to_num(&line);
+        } else {
+            output = line.to_string();
         }
         let mut first: Option<String> = None;
         let mut last: Option<String> = None;
-        for c in line.chars() {
+        for c in output.chars() {
             if c.is_ascii_digit() {
                 if first.is_none() {
                     first = Some(c.to_string());
@@ -58,22 +60,10 @@ pub(crate) fn process_lines(mut line: String, part2: bool) -> i32 {
 }
 
 pub(crate) fn day1(part2: bool) -> i32 {
-    let data = read("src/data/1-1.txt");
-    // let words: HashMap<&str, i32> = HashMap::from([
-    //     ("one", 1),
-    //     ("two", 2),
-    //     ("three", 3),
-    //     ("four", 4),
-    //     ("five", 5),
-    //     ("six", 6),
-    //     ("seven", 7),
-    //     ("eight", 8),
-    //     ("nine", 9),
-    // ]);
+    let data = fs::read_to_string("src/data/1-1.txt").unwrap();
 
     let mut nums: Vec<i32> = vec![];
-    for line in data.unwrap().lines() {
-        let line = line.unwrap();
+    for line in data.lines() {
         let num = process_lines(line, part2);
         nums.push(num);
     }
