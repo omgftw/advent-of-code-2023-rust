@@ -28,7 +28,8 @@ fn main() {
     }
     if !args.single || args.day2 {
         // Day 2 Part 1
-        let day2_part1 = day2::day2(12, 13, 14, None);
-        println!("Day 2 Part 1: {:?}", day2_part1);
+        let day2 = day2::day2(12, 13, 14, None);
+        println!("Day 2 Part 1: {:?}", day2.0);
+        println!("Day 2 Part 2: {:?}", day2.1);
     }
 }
