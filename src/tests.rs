@@ -74,8 +74,15 @@ Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green"#.to_string();
 ......755.
 ...$.*....
 .664.598.."#.to_string();
-        assert_eq!(day3::day3(Some(test_data)), 4361);
+        let result = day3::day3(Some(test_data));
+        assert_eq!(result.0, 4361);
+        assert_eq!(result.1, 467835);
+    }
 
-        assert_eq!(day3::day3(None), 525911);
+    #[test]
+    fn test_day3_part2() {
+        let result = day3::day3(None);
+        assert_eq!(result.0, 525911);
+        assert_eq!(result.1, 75805607);
     }
 }
