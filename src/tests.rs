@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod aoc_tests {
-    use crate::{day1, day2};
+    use crate::{day1, day2, day3};
 
     #[test]
     fn test_day1_words_to_num() {
@@ -59,6 +59,23 @@ Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
 Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green"#.to_string();
         assert_eq!(day2::day2(12, 13, 14, Some(test_data)).1, 2286);
 
-        // assert_eq!(day2::day2(12, 13, 14, None).1, 5);
+        assert_eq!(day2::day2(12, 13, 14, None).1, 86036);
+    }
+
+    #[test]
+    fn test_day3_part1() {
+        let test_data = r#"467..114..
+...*......
+..35..633.
+......#...
+617*......
+.....+.58.
+..592.....
+......755.
+...$.*....
+.664.598.."#.to_string();
+        assert_eq!(day3::day3(Some(test_data)), 4361);
+
+        assert_eq!(day3::day3(None), 525911);
     }
 }

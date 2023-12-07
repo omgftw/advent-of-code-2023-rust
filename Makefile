@@ -11,3 +11,8 @@ benchmark_day2: target/release/advent-of-code-2023-rust
 
 benchmark_all: target/release/advent-of-code-2023-rust
 	hyperfine --warmup ${WARMUP} -- '${BINARY_PATH}'
+
+clean:
+	rm -rf target
+
+rebuild: clean target/release/advent-of-code-2023-rust

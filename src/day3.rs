@@ -1,0 +1,107 @@
+use std::fs;
+
+pub(crate) fn day3(data: Option<String>) -> i32 {
+    let data = data.unwrap_or_else(|| fs::read_to_string("src/data/3.txt").unwrap());
+    let data = data.lines().collect::<Vec<&str>>();
+    let re = regex::Regex::new(r"\d+").unwrap();
+    let symbols = ['#', '$', '%', '&', '*', '+', '-', '/', '=', '@'];
+
+    let len = data.len();
+    let mut valid_nums: Vec<i32> = vec![];
+    for (i, line) in data.iter().enumerate() {
+        // find all numbers in string
+        let nums_match = re.find_iter(line).collect::<Vec<_>>();
+        for num_match in nums_match {
+            let orig_start = num_match.start();
+            let mut start = orig_start;
+            let orig_end = num_match.end();
+            let mut end = orig_end;
+
+            // include left
+            start = start.saturating_sub(1);
+            // include right
+            if end < line.len() {
+                end += 1;
+            }
+
+            let mut check_chars = |chars: Vec<char>| -> bool {
+                for char in chars {
+                    if symbols.contains(&char) {
+                        valid_nums.push(line[orig_start..orig_end].parse::<i32>().unwrap());
+                        return true;
+                    }
+                }
+                false
+            };
+
+            // check upper
+            if i > 0 {
+                let chars = data[i - 1].chars().collect::<Vec<char>>();
+                let chars = chars[start..end].to_vec();
+                if check_chars(chars) {
+                    continue;
+                }
+                // for char in chars {
+                //     if symbols.contains(&char) {
+                //         valid_nums.push(line[start..end].parse::<i32>().unwrap());
+                //         continue;
+                //     }
+                // }
+            }
+            // check lower
+            if i < len - 1 {
+                let chars = data[i + 1].chars().collect::<Vec<char>>();
+                let chars = chars[start..end].to_vec();
+                // for char in chars {
+                //     if symbols.contains(&char) {
+                //         valid_nums.push(line[start..end].parse::<i32>().unwrap());
+                //         continue;
+                //     }
+                // }
+                if check_chars(chars) {
+                    continue;
+                }
+            }
+            // check current
+            let chars = line.chars().collect::<Vec<char>>();
+            let chars = chars[start..end].to_vec();
+            // for char in chars {
+            //     if symbols.contains(&char) {
+            //         valid_nums.push(line[start..end].parse::<i32>().unwrap());
+            //         continue;
+            //     }
+            // }
+            if check_chars(chars) {
+                    continue;
+            }
+
+
+
+
+            // // check left
+            // if start > 0 {
+            //     let left_pos = start - 1;
+            //     if check_column(&data, &symbols, left_pos, i) {
+            //         valid_nums.push(line[start..right_pos].parse::<i32>().unwrap());
+            //         continue;
+            //     }
+            // }
+            // // check right
+            // if right_pos < line.len() && check_column(&data, &symbols, right_pos, i) {
+            //     valid_nums.push(line[start..right_pos].parse::<i32>().unwrap());
+            //     continue;
+            // }
+            // // check upper and lower
+            // if check_column(&data, &symbols, start, i) {
+            //     valid_nums.push(line[start..right_pos].parse::<i32>().unwrap());
+            //     continue;
+            // }
+        }
+    }
+    // sum valid nums
+    let mut sum = 0;
+    for num in valid_nums {
+        sum += num;
+    }
+    sum
+}
