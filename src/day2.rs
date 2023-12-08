@@ -65,7 +65,7 @@ fn process_cube(cube: &str) -> Cubes {
 }
 
 pub(crate) fn day2(red: i32, green: i32, blue: i32, data: Option<String>) -> (i32, i32) {
-    let data = data.unwrap_or_else(|| std::fs::read_to_string("src/data/2-1.txt").unwrap());
+    let data = data.unwrap_or_else(|| std::fs::read_to_string("src/data/2.txt").unwrap());
     let lines = data.lines();
 
     let mut games: Vec<Game> = vec![];

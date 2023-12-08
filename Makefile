@@ -16,6 +16,9 @@ benchmark_day2: build
 benchmark_day3: build
 	hyperfine --warmup ${WARMUP} -- '${BINARY_PATH} --single --day3'
 
+benchmark_day4: build
+	hyperfine --warmup ${WARMUP} -- '${BINARY_PATH} --single --day4'
+
 benchmark_all: build
 	hyperfine --warmup ${WARMUP} -- '${BINARY_PATH}'
 
