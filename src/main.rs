@@ -4,6 +4,7 @@ mod day1;
 mod day2;
 mod day3;
 mod day4;
+mod day5;
 
 use clap::Parser;
 
@@ -19,6 +20,8 @@ struct Args {
     day3: bool,
     #[arg(long)]
     day4: bool,
+    #[arg(long)]
+    day5: bool,
 }
 
 fn main() {
@@ -49,5 +52,11 @@ fn main() {
         let day4 = day4::day4(None);
         println!("Day 4 Part 1: {}", day4.0);
         println!("Day 4 Part 2: {}", day4.1);
+    }
+    if !args.single || args.day5 {
+        // Day 5
+        let day5 = day5::day5(None);
+        println!("Day 5 Part 1: {}", day5.0);
+        println!("Day 5 Part 2: {}", day5.1);
     }
 }

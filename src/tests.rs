@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod aoc_tests {
-    use crate::{day1, day2, day3, day4};
+    use crate::{day1, day2, day3, day4, day5};
 
     #[test]
     fn test_day1_words_to_num() {
@@ -116,4 +116,56 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11"#;
         // Part 2
         assert_eq!(result.1, 10425665);
     }
+
+    #[test]
+    fn test_day5_test_data() {
+        let test_data = r#"seeds: 79 14 55 13
+
+seed-to-soil map:
+50 98 2
+52 50 48
+
+soil-to-fertilizer map:
+0 15 37
+37 52 2
+39 0 15
+
+fertilizer-to-water map:
+49 53 8
+0 11 42
+42 0 7
+57 7 4
+
+water-to-light map:
+88 18 7
+18 25 70
+
+light-to-temperature map:
+45 77 23
+81 45 19
+68 64 13
+
+temperature-to-humidity map:
+0 69 1
+1 0 69
+
+humidity-to-location map:
+60 56 37
+56 93 4"#;
+
+            let result = day5::day5(Some(test_data.to_string()));
+            // Part 1
+            assert_eq!(result.0, 35);
+            // Part 2
+            // assert_eq!(result.1, 0);
+        }
+
+        #[test]
+        fn test_day5() {
+            let result = day5::day5(None);
+            // Part 1
+            assert_eq!(result.0, 403695602);
+            // Part 2
+            // assert_eq!(result.1, 0);
+        }
 }
