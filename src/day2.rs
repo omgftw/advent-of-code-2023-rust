@@ -16,7 +16,7 @@ struct Set {
 
 pub struct Game {
     id: i32,
-    sets: Vec<Set>
+    sets: Vec<Set>,
 }
 
 fn process_game_line(line: &str) -> Game {
@@ -32,10 +32,7 @@ fn process_game_line(line: &str) -> Game {
         };
         sets.push(set);
     }
-    Game {
-        id,
-        sets,
-    }
+    Game { id, sets }
 }
 
 fn process_cube_set(sets: &str) -> Vec<Cubes> {
@@ -58,10 +55,7 @@ fn process_cube(cube: &str) -> Cubes {
         "green" => Colors::Green,
         _ => Colors::None,
     };
-    Cubes {
-        quantity,
-        color,
-    }
+    Cubes { quantity, color }
 }
 
 pub(crate) fn day2(red: i32, green: i32, blue: i32, data: Option<String>) -> (i32, i32) {
@@ -93,7 +87,7 @@ pub(crate) fn day2(red: i32, green: i32, blue: i32, data: Option<String>) -> (i3
                             valid = false;
                             // break;
                         }
-                    },
+                    }
                     Colors::Green => {
                         if cube.quantity > least_green {
                             least_green = cube.quantity;
@@ -102,7 +96,7 @@ pub(crate) fn day2(red: i32, green: i32, blue: i32, data: Option<String>) -> (i3
                             valid = false;
                             // break;
                         }
-                    },
+                    }
                     Colors::Blue => {
                         if cube.quantity > least_blue {
                             least_blue = cube.quantity;
@@ -111,10 +105,10 @@ pub(crate) fn day2(red: i32, green: i32, blue: i32, data: Option<String>) -> (i3
                             valid = false;
                             // break;
                         }
-                    },
+                    }
                     _ => {
                         valid = false;
-                    },
+                    }
                 }
             }
             // if !valid {

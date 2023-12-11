@@ -48,7 +48,7 @@ pub(crate) fn day3(data: Option<String>) -> (i32, i32) {
             if y > 0 {
                 let chars = data[y - 1].chars().collect::<Vec<char>>();
                 let chars = chars[start..end].to_vec();
-                if check_chars(chars, start, y-1) {
+                if check_chars(chars, start, y - 1) {
                     continue;
                 }
                 // for char in chars {
@@ -68,7 +68,7 @@ pub(crate) fn day3(data: Option<String>) -> (i32, i32) {
                 //         continue;
                 //     }
                 // }
-                if check_chars(chars, start, y+1) {
+                if check_chars(chars, start, y + 1) {
                     continue;
                 }
             }
@@ -82,11 +82,8 @@ pub(crate) fn day3(data: Option<String>) -> (i32, i32) {
             //     }
             // }
             if check_chars(chars, start, y) {
-                    continue;
+                continue;
             }
-
-
-
 
             // // check left
             // if start > 0 {

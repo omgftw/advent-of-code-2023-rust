@@ -17,7 +17,6 @@ pub(crate) fn day4(data: Option<String>) -> (i32, i32) {
     let mut all_cards = vec![];
 
     for line in data.lines() {
-
         let parts = line.split(':').collect::<Vec<&str>>();
         let numbers = parts[1].split('|').collect::<Vec<&str>>();
         let winning_numbers = numbers[0].split_whitespace().collect::<Vec<&str>>();
@@ -48,7 +47,7 @@ pub(crate) fn day4(data: Option<String>) -> (i32, i32) {
         let card = card.clone();
         all_cards_count += card.count;
         for x in 0..card.winning_count as usize {
-            let other = &mut all_cards[x+i+1];
+            let other = &mut all_cards[x + i + 1];
             other.count += card.count;
         }
     }

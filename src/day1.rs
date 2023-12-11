@@ -37,26 +37,26 @@ pub(crate) fn words_to_num(string: &str) -> String {
 }
 
 pub(crate) fn process_lines(line: &str, part2: bool) -> i32 {
-        let output: String;
-        if part2 {
-            output = words_to_num(&line);
-        } else {
-            output = line.to_string();
-        }
-        let mut first: Option<String> = None;
-        let mut last: Option<String> = None;
-        for c in output.chars() {
-            if c.is_ascii_digit() {
-                if first.is_none() {
-                    first = Some(c.to_string());
-                }
-                last = Some(c.to_string());
+    let output: String;
+    if part2 {
+        output = words_to_num(&line);
+    } else {
+        output = line.to_string();
+    }
+    let mut first: Option<String> = None;
+    let mut last: Option<String> = None;
+    for c in output.chars() {
+        if c.is_ascii_digit() {
+            if first.is_none() {
+                first = Some(c.to_string());
             }
+            last = Some(c.to_string());
         }
-        let mut first = first.unwrap();
-        let last = last.unwrap();
-        first.push_str(&last);
-        first.parse::<i32>().unwrap()
+    }
+    let mut first = first.unwrap();
+    let last = last.unwrap();
+    first.push_str(&last);
+    first.parse::<i32>().unwrap()
 }
 
 pub(crate) fn day1(part2: bool) -> i32 {
