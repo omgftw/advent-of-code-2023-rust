@@ -7,6 +7,12 @@ struct Map {
     range: i64,
 }
 
+// #[derive(Clone)]
+// struct SeedRange {
+//     start: i64,
+//     range: i64,
+// }
+
 // struct Data {
 //     seed_to_soil: Map,
 //     soil_to_fertilizer: Map,
@@ -24,7 +30,10 @@ fn parse_data(data: &str) -> (Vec<i64>, Vec<Vec<Map>>) {
     let seeds = data[0];
     let seeds = seeds.split(' ').collect::<Vec<&str>>();
     let seeds = seeds[1..].to_vec();
-    let seeds = seeds.iter().map(|s| s.parse::<i64>().unwrap()).collect::<Vec<i64>>();
+    let seeds = seeds
+        .iter()
+        .map(|s| s.parse::<i64>().unwrap())
+        .collect::<Vec<i64>>();
     for (i, mapping_type) in data.iter().enumerate() {
         let mut processed_mapping_type = Vec::new();
         if i == 0 {
@@ -57,7 +66,8 @@ pub(crate) fn day5(data: Option<String>) -> (i64, i64) {
     };
 
     let (mut seeds, maps) = parse_data(&data);
-    for map in maps {
+    // let seeds_ranges = seeds.clone();
+    for map in maps.clone() {
         let mut new_seeds = Vec::new();
         for seed in seeds.iter() {
             let mut handled = false;
@@ -74,6 +84,31 @@ pub(crate) fn day5(data: Option<String>) -> (i64, i64) {
         }
         seeds = new_seeds;
     }
+
+    // let seeds_ranges = seeds_ranges
+    //     .windows(2)
+    //     .map(|s| SeedRange {
+    //         start: s[0],
+    //         range: s[1],
+    //     })
+    //     .collect::<Vec<SeedRange>>();
+    // for map in maps {
+    //     let mut new_seeds = Vec::new();
+    //     for seed_range in seeds_ranges.iter() {
+    //         let mut handled = false;
+    //         for map in &map {
+    //             if seed_range >= &map.source && seed_range <= &(map.source + map.range) {
+    //                 new_seeds.push(map.dest + (seed_range - map.source));
+    //                 handled = true;
+    //                 break;
+    //             }
+    //         }
+    //         if !handled {
+    //             new_seeds.push(*seed_range);
+    //         }
+    //     }
+    //     seeds = new_seeds;
+    // }
 
     let mut lowest_seed = seeds[0];
     for seed in seeds {
