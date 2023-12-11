@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod aoc_tests {
-    use crate::{day1, day2, day3, day4, day5};
+    use crate::{day1, day2, day3, day4, day5, day6};
 
     #[test]
     fn test_day1_words_to_num() {
@@ -153,19 +153,40 @@ humidity-to-location map:
 60 56 37
 56 93 4"#;
 
-            let result = day5::day5(Some(test_data.to_string()));
-            // Part 1
-            assert_eq!(result.0, 35);
-            // Part 2
-            // assert_eq!(result.1, 0);
-        }
+        let result = day5::day5(Some(test_data.to_string()));
+        // Part 1
+        assert_eq!(result.0, 35);
+        // Part 2
+        // assert_eq!(result.1, 0);
+    }
 
-        #[test]
-        fn test_day5() {
-            let result = day5::day5(None);
-            // Part 1
-            assert_eq!(result.0, 403695602);
-            // Part 2
-            // assert_eq!(result.1, 0);
-        }
+    #[test]
+    fn test_day5() {
+        let result = day5::day5(None);
+        // Part 1
+        assert_eq!(result.0, 403695602);
+        // Part 2
+        // assert_eq!(result.1, 0);
+    }
+
+    #[test]
+    fn test_day6_test_data() {
+        let test_data = r#"Time:      7  15   30
+Distance:  9  40  200"#;
+
+        let result = day6::day6(Some(test_data.to_string()));
+        // Part 1
+        assert_eq!(result.0, 288);
+        // Part 2
+        assert_eq!(result.1, 71503);
+    }
+
+    #[test]
+    fn test_day6() {
+        let result = day6::day6(None);
+        // Part 1
+        assert_eq!(result.0, 5133600);
+        // Part 2
+        assert_eq!(result.1, 40651271);
+    }
 }
