@@ -1,11 +1,11 @@
-#[cfg(test)]
-mod tests;
 mod day1;
 mod day2;
 mod day3;
 mod day4;
 mod day5;
 mod day6;
+#[cfg(test)]
+mod tests;
 
 use clap::Parser;
 
@@ -27,7 +27,8 @@ struct Args {
     day6: bool,
 }
 
-fn main() {
+#[tokio::main]
+async fn main() {
     let args = Args::parse();
 
     if !args.single || args.day1 {
@@ -64,7 +65,7 @@ fn main() {
     }
     if !args.single || args.day6 {
         // Day 6
-        let day6 = day6::day6(None);
+        let day6 = day6::day6(None).await;
         println!("Day 6 Part 1: {}", day6.0);
         println!("Day 6 Part 2: {}", day6.1);
     }

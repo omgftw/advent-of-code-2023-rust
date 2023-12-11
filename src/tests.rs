@@ -171,21 +171,21 @@ humidity-to-location map:
         // assert_eq!(result.1, 0);
     }
 
-    #[test]
-    fn test_day6_test_data() {
+    #[tokio::test]
+    async fn test_day6_test_data() {
         let test_data = r#"Time:      7  15   30
 Distance:  9  40  200"#;
 
-        let result = day6::day6(Some(test_data.to_string()));
+        let result = day6::day6(Some(test_data.to_string())).await;
         // Part 1
         assert_eq!(result.0, 288);
         // Part 2
         assert_eq!(result.1, 71503);
     }
 
-    #[test]
-    fn test_day6() {
-        let result = day6::day6(None);
+    #[tokio::test]
+    async fn test_day6() {
+        let result = day6::day6(None).await;
         // Part 1
         assert_eq!(result.0, 5133600);
         // Part 2

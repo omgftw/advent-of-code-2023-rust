@@ -1,4 +1,4 @@
-use std::fs;
+use std::{fs, thread};
 
 struct Race {
     time: i32,
@@ -6,7 +6,7 @@ struct Race {
     total_possible_times: i32,
 }
 
-pub(crate) fn day6(data: Option<String>) -> (i32, i64) {
+pub(crate) async fn day6(data: Option<String>) -> (i32, i64) {
     let data = data.unwrap_or_else(|| fs::read_to_string("src/data/6.txt").unwrap());
     let data = data.lines().collect::<Vec<&str>>();
 
@@ -41,25 +41,33 @@ pub(crate) fn day6(data: Option<String>) -> (i32, i64) {
     let race_time = race_time.split(':').collect::<Vec<&str>>()[1].replace(' ', "").parse::<i64>().unwrap();
     let race_distance = race_distance.split(':').collect::<Vec<&str>>()[1].replace(' ', "").parse::<i64>().unwrap();
 
-    let mut total2 = 0;
-    for time in 1..race_time {
-        if race_distance < time * (race_time - time) {
-            total2 += 1;
-        }
+    // Get current CPU count
+    let num_threads = thread::available_parallelism().unwrap().get() as i64;
+
+    let mut handles = Vec::new();
+    let chunk_size = race_time / num_threads;
+
+    for i in 0..num_threads {
+        let start = i * chunk_size + 1;
+        let end = if i == num_threads - 1 { race_time + 1 } else { (i + 1) * chunk_size + 1 };
+
+        let handle = thread::spawn(move || {
+            let mut total = 0;
+            for time in start..end {
+                if race_distance < time * (race_time - time) {
+                    total += 1;
+                }
+            }
+            total
+        });
+
+        handles.push(handle);
     }
 
-    // let mut total2 = 0;
-    // let half_race_time = race_time / 2;
-    // for time in 1..=half_race_time {
-    //     let product = time * (race_time - time);
-    //     if race_distance < product {
-    //         total2 += 1; // Count for the first half
-    //         if time != half_race_time || race_time % 2 != 0 {
-    //             total2 += 1; // Count for the symmetric second half
-    //         }
-    //     }
-    // }
-
+    let mut total2 = 0;
+    for handle in handles {
+        total2 += handle.join().unwrap();
+    }
 
     (total, total2)
 }
