@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod aoc_tests {
-    use crate::{day1, day2, day3, day4, day5, day6};
+    use crate::{day1, day2, day3, day4, day5, day6, day7};
 
     #[test]
     fn test_day1_words_to_num() {
@@ -190,5 +190,29 @@ Distance:  9  40  200"#;
         assert_eq!(result.0, 5133600);
         // Part 2
         assert_eq!(result.1, 40651271);
+    }
+
+    #[tokio::test]
+    async fn test_day7_test_data() {
+        let test_data = r#"32T3K 765
+T55J5 684
+KK677 28
+KTJJT 220
+QQQJA 483"#;
+
+        let result = day7::day7(Some(test_data.to_string())).await;
+        // Part 1
+        assert_eq!(result.0, 6440);
+        // Part 2
+        // assert_eq!(result.1, 0);
+    }
+
+    #[tokio::test]
+    async fn test_day7() {
+        let result = day7::day7(None).await;
+        // Part 1
+        assert_eq!(result.0, 241344943);
+        // Part 2
+        // assert_eq!(result.1, 0);
     }
 }

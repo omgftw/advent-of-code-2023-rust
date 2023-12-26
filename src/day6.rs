@@ -12,10 +12,16 @@ pub(crate) async fn day6(data: Option<String>) -> (i32, i64) {
 
     let times = data[0];
     let distances = data[1];
-    let times= times.split_whitespace().collect::<Vec<&str>>()[1..].to_vec();
+    let times = times.split_whitespace().collect::<Vec<&str>>()[1..].to_vec();
     let distances = distances.split_whitespace().collect::<Vec<&str>>()[1..].to_vec();
-    let times = times.iter().map(|s| s.parse::<i32>().unwrap()).collect::<Vec<i32>>();
-    let distances = distances.iter().map(|s| s.parse::<i32>().unwrap()).collect::<Vec<i32>>();
+    let times = times
+        .iter()
+        .map(|s| s.parse::<i32>().unwrap())
+        .collect::<Vec<i32>>();
+    let distances = distances
+        .iter()
+        .map(|s| s.parse::<i32>().unwrap())
+        .collect::<Vec<i32>>();
 
     let mut races = Vec::new();
     for i in 0..times.len() {
@@ -38,8 +44,14 @@ pub(crate) async fn day6(data: Option<String>) -> (i32, i64) {
 
     let race_time = data[0];
     let race_distance = data[1];
-    let race_time = race_time.split(':').collect::<Vec<&str>>()[1].replace(' ', "").parse::<i64>().unwrap();
-    let race_distance = race_distance.split(':').collect::<Vec<&str>>()[1].replace(' ', "").parse::<i64>().unwrap();
+    let race_time = race_time.split(':').collect::<Vec<&str>>()[1]
+        .replace(' ', "")
+        .parse::<i64>()
+        .unwrap();
+    let race_distance = race_distance.split(':').collect::<Vec<&str>>()[1]
+        .replace(' ', "")
+        .parse::<i64>()
+        .unwrap();
 
     // Get current CPU count
     let num_threads = thread::available_parallelism().unwrap().get() as i64;
@@ -49,7 +61,11 @@ pub(crate) async fn day6(data: Option<String>) -> (i32, i64) {
 
     for i in 0..num_threads {
         let start = i * chunk_size + 1;
-        let end = if i == num_threads - 1 { race_time + 1 } else { (i + 1) * chunk_size + 1 };
+        let end = if i == num_threads - 1 {
+            race_time + 1
+        } else {
+            (i + 1) * chunk_size + 1
+        };
 
         let handle = thread::spawn(move || {
             let mut total = 0;

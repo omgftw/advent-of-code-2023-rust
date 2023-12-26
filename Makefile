@@ -25,7 +25,10 @@ benchmark_day5: build
 benchmark_day6: build
 	hyperfine --warmup ${WARMUP} -- '${BINARY_PATH} --single --day6'
 
-benchmark_all: build benchmark_day1 benchmark_day2 benchmark_day3 benchmark_day4 benchmark_day5 benchmark_day6
+benchmark_day7: build
+	hyperfine --warmup ${WARMUP} -- '${BINARY_PATH} --single --day7'
+
+benchmark_all: build benchmark_day1 benchmark_day2 benchmark_day3 benchmark_day4 benchmark_day5 benchmark_day6 benchmark_day7
 	@echo "Benchmarking all days on a single run..."
 	hyperfine --warmup ${WARMUP} -- '${BINARY_PATH}'
 
