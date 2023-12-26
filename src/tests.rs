@@ -194,25 +194,41 @@ Distance:  9  40  200"#;
 
     #[tokio::test]
     async fn test_day7_test_data() {
-        let test_data = r#"32T3K 765
-T55J5 684
-KK677 28
-KTJJT 220
-QQQJA 483"#;
+        let test_data = r#"2345A 1
+Q2KJJ 13
+Q2Q2Q 19
+T3T3J 17
+T3Q33 11
+2345J 3
+J345A 2
+32T3K 5
+T55J5 29
+KK677 7
+KTJJT 34
+QQQJA 31
+JJJJJ 37
+JAAAA 43
+AAAAJ 59
+AAAAA 61
+2AAAA 23
+2JJJJ 53
+JJJJ2 41"#;
 
-        let result = day7::day7(Some(test_data.to_string())).await;
         // Part 1
-        assert_eq!(result.0, 6440);
+        let result = day7::day7(Some(test_data.to_string()), false).await;
+        assert_eq!(result, 6592);
         // Part 2
-        // assert_eq!(result.1, 0);
+        let result = day7::day7(Some(test_data.to_string()), true).await;
+        assert_eq!(result, 6839);
     }
 
     #[tokio::test]
     async fn test_day7() {
-        let result = day7::day7(None).await;
         // Part 1
-        assert_eq!(result.0, 241344943);
+        let result = day7::day7(None, false).await;
+        assert_eq!(result, 241344943);
         // Part 2
-        // assert_eq!(result.1, 0);
+        let result = day7::day7(None, true).await;
+        assert_eq!(result, 243101568);
     }
 }

@@ -18,19 +18,19 @@ impl PartialEq for Hand {
 lazy_static! {
     static ref CARD_ORDER: HashMap<&'static str, usize> = {
         let mut m = HashMap::new();
-        m.insert("2", 0);
-        m.insert("3", 1);
-        m.insert("4", 2);
-        m.insert("5", 3);
-        m.insert("6", 4);
-        m.insert("7", 5);
-        m.insert("8", 6);
-        m.insert("9", 7);
-        m.insert("T", 8);
-        m.insert("J", 9);
-        m.insert("Q", 10);
-        m.insert("K", 11);
-        m.insert("A", 12);
+        m.insert("2", 1);
+        m.insert("3", 2);
+        m.insert("4", 3);
+        m.insert("5", 4);
+        m.insert("6", 5);
+        m.insert("7", 6);
+        m.insert("8", 7);
+        m.insert("9", 8);
+        m.insert("T", 9);
+        m.insert("J", 10);
+        m.insert("Q", 11);
+        m.insert("K", 12);
+        m.insert("A", 13);
         m
     };
 }
@@ -49,8 +49,8 @@ lazy_static! {
     };
 }
 
-impl PartialOrd for Hand {
-    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+impl Hand {
+    fn partial_cmp(&self, other: &Self, card_order: &HashMap<&str, usize>) -> Option<std::cmp::Ordering> {
         let self_index = CARD_TYPE_ORDER.get(self.hand_type.as_str()).unwrap();
         let other_index = CARD_TYPE_ORDER.get(other.hand_type.as_str()).unwrap();
         match self_index.cmp(other_index) {
@@ -60,8 +60,8 @@ impl PartialOrd for Hand {
                 let self_cards = self.cards.chars().collect::<Vec<char>>();
                 let other_cards = other.cards.chars().collect::<Vec<char>>();
                 for i in 0..self_cards.len() {
-                    let self_index = CARD_ORDER.get(self_cards[i].to_string().as_str()).unwrap();
-                    let other_index = CARD_ORDER.get(other_cards[i].to_string().as_str()).unwrap();
+                    let self_index = card_order.get(self_cards[i].to_string().as_str()).unwrap();
+                    let other_index = card_order.get(other_cards[i].to_string().as_str()).unwrap();
                     match self_index.cmp(other_index) {
                         std::cmp::Ordering::Less => return Some(std::cmp::Ordering::Less),
                         std::cmp::Ordering::Greater => return Some(std::cmp::Ordering::Greater),
@@ -74,11 +74,18 @@ impl PartialOrd for Hand {
     }
 }
 
-fn get_hand_type(cards: &str) -> String {
+fn get_hand_type(cards: &str, jokers_wild: bool) -> String {
+    let cards = cards.to_string();
+
     let mut items = HashMap::new();
     for card in cards.chars() {
         let count = items.entry(card).or_insert(0);
         *count += 1;
+    }
+    let jokers = &items.entry('J').or_insert(0);
+    let jokers = **jokers;
+    if jokers_wild {
+        items.remove_entry(&'J');
     }
     let mut card_type = "high-card";
     for (_, count) in items {
@@ -98,10 +105,48 @@ fn get_hand_type(cards: &str) -> String {
             card_type = "five-of-a-kind";
         }
     }
+
+    if jokers_wild && jokers > 0 {
+        if card_type == "one-pair" {
+            if jokers == 1 {
+                card_type = "three-of-a-kind";
+            } else if jokers == 2 {
+                card_type = "four-of-a-kind";
+            } else if jokers == 3 {
+                card_type = "five-of-a-kind";
+            }
+        } else if card_type == "two-pair" {
+            card_type = "full-house";
+        } else if card_type == "three-of-a-kind" {
+            if jokers == 1 {
+                card_type = "four-of-a-kind";
+            } else if jokers == 2 {
+                card_type = "five-of-a-kind";
+            }
+        } else if card_type == "four-of-a-kind" {
+            card_type = "five-of-a-kind";
+        } else if card_type == "high-card" {
+            if jokers == 1 {
+                card_type = "one-pair";
+            } else if jokers == 2 {
+                card_type = "three-of-a-kind";
+            } else if jokers == 3 {
+                card_type = "four-of-a-kind";
+            } else if jokers >= 4 {
+                card_type = "five-of-a-kind";
+            }
+        }
+    }
+
     card_type.to_string()
 }
 
-pub(crate) async fn day7(data: Option<String>) -> (i32, i32) {
+pub(crate) async fn day7(data: Option<String>, jokers_wild: bool) -> i32 {
+    let mut card_order = CARD_ORDER.clone();
+    if jokers_wild {
+        card_order.insert("J", 0);
+    }
+
     let data = data.unwrap_or_else(|| fs::read_to_string("src/data/7.txt").unwrap());
 
     let mut hands = Vec::new();
@@ -109,7 +154,7 @@ pub(crate) async fn day7(data: Option<String>) -> (i32, i32) {
         let item = line.split(' ').collect::<Vec<&str>>();
         let cards = item[0].to_string();
         let bid = item[1].parse::<i32>().unwrap();
-        let hand_type = get_hand_type(&cards);
+        let hand_type = get_hand_type(&cards, jokers_wild);
 
         hands.push(Hand {
             cards,
@@ -117,7 +162,7 @@ pub(crate) async fn day7(data: Option<String>) -> (i32, i32) {
             hand_type,
         });
     }
-    hands.sort_by(|a, b| a.partial_cmp(b).unwrap());
+    hands.sort_by(|a, b| a.partial_cmp(b, &card_order).unwrap());
 
     let mut total = 0;
     for (i, hand) in hands.iter().enumerate() {
@@ -125,5 +170,5 @@ pub(crate) async fn day7(data: Option<String>) -> (i32, i32) {
         total += hand.bid * (i as i32 + 1);
     }
 
-    (total, 0)
+    total
 }

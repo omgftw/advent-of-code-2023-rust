@@ -74,8 +74,9 @@ async fn main() {
     }
     if !args.single || args.day7 {
         // Day 7
-        let day7 = day7::day7(None).await;
-        println!("Day 7 Part 1: {}", day7.0);
-        println!("Day 7 Part 2: {}", day7.1);
+        let day7 = day7::day7(None, false).await;
+        println!("Day 7 Part 1: {}", day7);
+        let day7 = day7::day7(None, true).await;
+        println!("Day 7 Part 2: {}", day7);
     }
 }
