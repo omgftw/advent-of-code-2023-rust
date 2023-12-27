@@ -5,6 +5,7 @@ mod day4;
 mod day5;
 mod day6;
 mod day7;
+mod day8;
 #[cfg(test)]
 mod tests;
 
@@ -28,6 +29,8 @@ struct Args {
     day6: bool,
     #[arg(long)]
     day7: bool,
+    #[arg(long)]
+    day8: bool,
 }
 
 #[tokio::main]
@@ -78,5 +81,12 @@ async fn main() {
         println!("Day 7 Part 1: {}", day7);
         let day7 = day7::day7(None, true).await;
         println!("Day 7 Part 2: {}", day7);
+    }
+    if !args.single || args.day8 {
+        // Day 8
+        let day8 = day8::day8(None, false).await;
+        println!("Day 8 Part 1: {}", day8);
+        let day8 = day8::day8(None, true).await;
+        println!("Day 8 Part 2: {}", day8);
     }
 }

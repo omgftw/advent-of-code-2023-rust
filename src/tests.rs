@@ -1,6 +1,7 @@
 #[cfg(test)]
 mod aoc_tests {
-    use crate::{day1, day2, day3, day4, day5, day6, day7};
+    use std::fs;
+    use crate::{day1, day2, day3, day4, day5, day6, day7, day8};
 
     #[test]
     fn test_day1_words_to_num() {
@@ -43,12 +44,7 @@ mod aoc_tests {
 
     #[test]
     fn test_day2_test_data() {
-        let test_data = r#"Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
-Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
-Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red
-Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
-Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green"#
-            .to_string();
+        let test_data = fs::read_to_string("src/test_data/2.txt").unwrap();
 
         // Part 1
         assert_eq!(day2::day2(12, 13, 14, Some(test_data.clone())).0, 8);
@@ -66,17 +62,7 @@ Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green"#
 
     #[test]
     fn test_day3_test_data() {
-        let test_data = r#"467..114..
-...*......
-..35..633.
-......#...
-617*......
-.....+.58.
-..592.....
-......755.
-...$.*....
-.664.598.."#
-            .to_string();
+        let test_data = fs::read_to_string("src/test_data/3.txt").unwrap();
 
         let result = day3::day3(Some(test_data));
         // Part 1
@@ -96,12 +82,7 @@ Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green"#
 
     #[test]
     fn test_day4_test_data() {
-        let test_data = r#"Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
-Card 2: 13 32 20 16 61 | 61 30 68 82 17 32 24 19
-Card 3:  1 21 53 59 44 | 69 82 63 72 16 21 14  1
-Card 4: 41 92 73 84 69 | 59 84 76 51 58  5 54 83
-Card 5: 87 83 26 28 32 | 88 30 70 12 93 22 82 36
-Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11"#;
+        let test_data = fs::read_to_string("src/test_data/4.txt").unwrap();
 
         let result = day4::day4(Some(test_data.to_string()));
         // Part 1
@@ -121,39 +102,7 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11"#;
 
     #[test]
     fn test_day5_test_data() {
-        let test_data = r#"seeds: 79 14 55 13
-
-seed-to-soil map:
-50 98 2
-52 50 48
-
-soil-to-fertilizer map:
-0 15 37
-37 52 2
-39 0 15
-
-fertilizer-to-water map:
-49 53 8
-0 11 42
-42 0 7
-57 7 4
-
-water-to-light map:
-88 18 7
-18 25 70
-
-light-to-temperature map:
-45 77 23
-81 45 19
-68 64 13
-
-temperature-to-humidity map:
-0 69 1
-1 0 69
-
-humidity-to-location map:
-60 56 37
-56 93 4"#;
+        let test_data = fs::read_to_string("src/test_data/5.txt").unwrap();
 
         let result = day5::day5(Some(test_data.to_string()));
         // Part 1
@@ -173,8 +122,7 @@ humidity-to-location map:
 
     #[tokio::test]
     async fn test_day6_test_data() {
-        let test_data = r#"Time:      7  15   30
-Distance:  9  40  200"#;
+        let test_data = fs::read_to_string("src/test_data/6.txt").unwrap();
 
         let result = day6::day6(Some(test_data.to_string())).await;
         // Part 1
@@ -194,25 +142,7 @@ Distance:  9  40  200"#;
 
     #[tokio::test]
     async fn test_day7_test_data() {
-        let test_data = r#"2345A 1
-Q2KJJ 13
-Q2Q2Q 19
-T3T3J 17
-T3Q33 11
-2345J 3
-J345A 2
-32T3K 5
-T55J5 29
-KK677 7
-KTJJT 34
-QQQJA 31
-JJJJJ 37
-JAAAA 43
-AAAAJ 59
-AAAAA 61
-2AAAA 23
-2JJJJ 53
-JJJJ2 41"#;
+        let test_data = fs::read_to_string("src/test_data/7.txt").unwrap();
 
         // Part 1
         let result = day7::day7(Some(test_data.to_string()), false).await;
@@ -230,5 +160,28 @@ JJJJ2 41"#;
         // Part 2
         let result = day7::day7(None, true).await;
         assert_eq!(result, 243101568);
+    }
+
+    #[tokio::test]
+    async fn test_day8_test_data() {
+        let test_data = fs::read_to_string("src/test_data/8.txt").unwrap();
+        let test_data_2 = fs::read_to_string("src/test_data/8_2.txt").unwrap();
+
+        // Part 1
+        let result = day8::day8(Some(test_data), false).await;
+        assert_eq!(result, 6);
+        // Part 2
+        let result = day8::day8(Some(test_data_2), true).await;
+        assert_eq!(result, 6);
+    }
+
+    #[tokio::test]
+    async fn test_day8() {
+        // Part 1
+        let result = day8::day8(None, false).await;
+        assert_eq!(result, 21883);
+        // Part 2
+        let result = day8::day8(None, true).await;
+        assert_eq!(result, 12833235391111);
     }
 }
