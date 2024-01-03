@@ -6,10 +6,12 @@ mod day5;
 mod day6;
 mod day7;
 mod day8;
+mod day9;
 #[cfg(test)]
 mod tests;
 
 use clap::Parser;
+use day9::day9;
 
 #[derive(Debug, Parser)]
 struct Args {
@@ -31,6 +33,8 @@ struct Args {
     day7: bool,
     #[arg(long)]
     day8: bool,
+    #[arg(long)]
+    day9: bool,
 }
 
 #[tokio::main]
@@ -88,5 +92,13 @@ async fn main() {
         println!("Day 8 Part 1: {}", day8);
         let day8 = day8::day8(None, true).await;
         println!("Day 8 Part 2: {}", day8);
+    }
+
+    if !args.single || args.day9 {
+        // Day 9
+        let day9 = day9(None).await;
+        println!("Day 9 Part 1: {}", day9.0);
+        // let day9 = day9::day9(None, true).await;
+        println!("Day 9 Part 2: {}", day9.1);
     }
 }

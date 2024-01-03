@@ -60,10 +60,7 @@ fn parse_data(data: &str) -> (Vec<i64>, Vec<Vec<Map>>) {
 }
 
 pub(crate) fn day5(data: Option<String>) -> (i64, i64) {
-    let data = match data {
-        Some(data) => data,
-        None => fs::read_to_string("src/data/5.txt").unwrap(),
-    };
+    let data = data.unwrap_or_else(|| fs::read_to_string("src/data/5.txt").unwrap());
 
     let (mut seeds, maps) = parse_data(&data);
     // let seeds_ranges = seeds.clone();

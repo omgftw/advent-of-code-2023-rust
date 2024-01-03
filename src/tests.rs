@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod aoc_tests {
     use std::fs;
-    use crate::{day1, day2, day3, day4, day5, day6, day7, day8};
+    use crate::{day1, day2, day3, day4, day5, day6, day7, day8, day9};
 
     #[test]
     fn test_day1_words_to_num() {
@@ -183,5 +183,16 @@ mod aoc_tests {
         // Part 2
         let result = day8::day8(None, true).await;
         assert_eq!(result, 12833235391111);
+    }
+
+    #[tokio::test]
+    async fn test_day9_test_data() {
+        let test_data = fs::read_to_string("src/test_data/9.txt").unwrap();
+        let (part1, part2) = day9::day9(Some(test_data)).await;
+
+        // Part 1
+        assert_eq!(part1, 114);
+        // Part 2
+        assert_eq!(part2, 2);
     }
 }

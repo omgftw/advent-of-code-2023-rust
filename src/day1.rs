@@ -37,12 +37,11 @@ pub(crate) fn words_to_num(string: &str) -> String {
 }
 
 pub(crate) fn process_lines(line: &str, part2: bool) -> i32 {
-    let output: String;
-    if part2 {
-        output = words_to_num(&line);
+    let output = if part2 {
+        words_to_num(line)
     } else {
-        output = line.to_string();
-    }
+        line.to_string()
+    };
     let mut first: Option<String> = None;
     let mut last: Option<String> = None;
     for c in output.chars() {
