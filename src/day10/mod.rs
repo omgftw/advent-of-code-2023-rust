@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use std::fs;
+use crate::helpers::is_debug;
 
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
 struct Point {
@@ -75,8 +76,57 @@ fn translate_symbols(s: &str) -> String {
         .replace('J', "╝")
 }
 
+fn points_inside_polygon(pipes: &Polygon) -> Vec<Point> {
+    // sort by y and then x
+    let mut sorted_points = pipes.points.clone();
+    sorted_points.sort_by(|a, b| {
+        if a.y == b.y {
+            a.x.cmp(&b.x)
+        } else {
+            a.y.cmp(&b.y)
+        }
+    });
+
+    // check only points within the polygon
+    // let mut internal_count = 0;
+    let mut inside_points = Vec::new();
+    let min_y = sorted_points[0].y;
+    let max_y = sorted_points[sorted_points.len() - 1].y;
+    for y in min_y..=max_y {
+        let pipe_line =  sorted_points.iter().filter(|p| p.y == y).collect::<Vec<&Point>>();
+        let min_x = pipe_line[0].x;
+        let max_x = pipe_line[pipe_line.len() - 1].x;
+        for x in min_x..=max_x {
+            if  sorted_points.contains(&(x, y).into()) {
+                continue;
+            }
+            // raycasting implementation
+            if pipes.contains(&(x, y).into()) {
+                // internal_count += 1;
+                inside_points.push((x, y).into());
+            }
+        }
+    }
+
+    inside_points
+}
+
+fn shoelace_formula(points: &[Point]) -> f64 {
+    let mut area = 0.0;
+    let n = points.len();
+
+    // Calculate area using the shoelace formula
+    for i in 0..n {
+        let j = (i + 1) % n; // Wrap around to the first point
+        area += points[i].x as f64 * points[j].y as f64;
+        area -= points[j].x as f64 * points[i].y as f64;
+    }
+
+    area.abs() / 2.0
+}
+
 pub(crate) async fn day10(data: Option<String>) -> (i32, i32) {
-    let data = data.unwrap_or_else(|| fs::read_to_string("src/data/10.txt").unwrap());
+    let data = data.unwrap_or_else(|| fs::read_to_string("src/day10/data/main.txt").unwrap());
     let data = translate_symbols(&data);
 
     let mut position_map: HashMap<char, [Point; 2]> = HashMap::new();
@@ -140,20 +190,28 @@ pub(crate) async fn day10(data: Option<String>) -> (i32, i32) {
         pipes.points.push(cur);
     }
 
-    // create a new matrix the same size as the original filled with spaces
-    let mut new_matrix = vec![];
-    for line in matrix.iter() {
-        let mut new_line = vec![];
-        new_line.resize(line.len(), ' ');
-        // for _ in line.iter() {
-        //     new_line.push(' ');
-        // }
-        new_matrix.push(new_line);
-    }
+    if is_debug() {
+        // create a new matrix the same size as the original filled with spaces
+        let mut new_matrix = vec![];
+        for line in matrix.iter() {
+            let mut new_line = vec![];
+            new_line.resize(line.len(), ' ');
+            new_matrix.push(new_line);
+        }
 
-    for pipe in pipes.points.clone() {
-        let cur_char = matrix[pipe.y as usize][pipe.x as usize];
-        new_matrix[pipe.y as usize][pipe.x as usize] = cur_char;
+        for pipe in pipes.points.clone() {
+            let cur_char = matrix[pipe.y as usize][pipe.x as usize];
+            new_matrix[pipe.y as usize][pipe.x as usize] = cur_char;
+        }
+
+        let points_in_polygon = points_inside_polygon(&pipes);
+        for point in points_in_polygon {
+            new_matrix[point.y as usize][point.x as usize] = 'X';
+        }
+
+        for line in new_matrix.iter() {
+            println!("{}", line.iter().collect::<String>());
+        }
     }
 
     let area = shoelace_formula(&pipes.points);

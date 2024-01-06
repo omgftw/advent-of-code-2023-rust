@@ -7,7 +7,7 @@ struct Race {
 }
 
 pub(crate) async fn day6(data: Option<String>) -> (i32, i64) {
-    let data = data.unwrap_or_else(|| fs::read_to_string("src/data/6.txt").unwrap());
+    let data = data.unwrap_or_else(|| fs::read_to_string("src/day6/data/main.txt").unwrap());
     let data = data.lines().collect::<Vec<&str>>();
 
     let times = data[0];

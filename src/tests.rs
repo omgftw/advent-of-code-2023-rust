@@ -44,7 +44,7 @@ mod aoc_tests {
 
     #[test]
     fn test_day2_test_data() {
-        let test_data = fs::read_to_string("src/test_data/2.txt").unwrap();
+        let test_data = fs::read_to_string("src/day2/data/test_1.txt").unwrap();
 
         // Part 1
         assert_eq!(day2::day2(12, 13, 14, Some(test_data.clone())).0, 8);
@@ -62,7 +62,7 @@ mod aoc_tests {
 
     #[test]
     fn test_day3_test_data() {
-        let test_data = fs::read_to_string("src/test_data/3.txt").unwrap();
+        let test_data = fs::read_to_string("src/day3/data/test_1.txt").unwrap();
 
         let result = day3::day3(Some(test_data));
         // Part 1
@@ -82,7 +82,7 @@ mod aoc_tests {
 
     #[test]
     fn test_day4_test_data() {
-        let test_data = fs::read_to_string("src/test_data/4.txt").unwrap();
+        let test_data = fs::read_to_string("src/day4/data/test_1.txt").unwrap();
 
         let result = day4::day4(Some(test_data.to_string()));
         // Part 1
@@ -102,7 +102,7 @@ mod aoc_tests {
 
     #[test]
     fn test_day5_test_data() {
-        let test_data = fs::read_to_string("src/test_data/5.txt").unwrap();
+        let test_data = fs::read_to_string("src/day5/data/test_1.txt").unwrap();
 
         let result = day5::day5(Some(test_data.to_string()));
         // Part 1
@@ -122,7 +122,7 @@ mod aoc_tests {
 
     #[tokio::test]
     async fn test_day6_test_data() {
-        let test_data = fs::read_to_string("src/test_data/6.txt").unwrap();
+        let test_data = fs::read_to_string("src/day6/data/test_1.txt").unwrap();
 
         let result = day6::day6(Some(test_data.to_string())).await;
         // Part 1
@@ -142,7 +142,7 @@ mod aoc_tests {
 
     #[tokio::test]
     async fn test_day7_test_data() {
-        let test_data = fs::read_to_string("src/test_data/7.txt").unwrap();
+        let test_data = fs::read_to_string("src/day7/data/test_1.txt").unwrap();
 
         // Part 1
         let result = day7::day7(Some(test_data.to_string()), false).await;
@@ -164,8 +164,8 @@ mod aoc_tests {
 
     #[tokio::test]
     async fn test_day8_test_data() {
-        let test_data = fs::read_to_string("src/test_data/8.txt").unwrap();
-        let test_data_2 = fs::read_to_string("src/test_data/8_2.txt").unwrap();
+        let test_data = fs::read_to_string("src/day8/data/test_1.txt").unwrap();
+        let test_data_2 = fs::read_to_string("src/day8/data/test_2.txt").unwrap();
 
         // Part 1
         let result = day8::day8(Some(test_data), false).await;
@@ -187,7 +187,7 @@ mod aoc_tests {
 
     #[tokio::test]
     async fn test_day9_test_data() {
-        let test_data = fs::read_to_string("src/test_data/9.txt").unwrap();
+        let test_data = fs::read_to_string("src/day9/data/test_1.txt").unwrap();
         let (part1, part2) = day9::day9(Some(test_data)).await;
 
         // Part 1
@@ -208,7 +208,7 @@ mod aoc_tests {
 
     #[tokio::test]
     async fn test_day10_test_data() {
-        let test_data = fs::read_to_string("src/test_data/10.txt").unwrap();
+        let test_data = fs::read_to_string("src/day10/data/test_1.txt").unwrap();
         let result = day10::day10(Some(test_data)).await;
 
         // Part 1

@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use std::fs;
 
 pub(crate) fn day3(data: Option<String>) -> (i32, i32) {
-    let data = data.unwrap_or_else(|| fs::read_to_string("src/data/3.txt").unwrap());
+    let data = data.unwrap_or_else(|| fs::read_to_string("src/day3/data/main.txt").unwrap());
     let data = data.lines().collect::<Vec<&str>>();
     let re = regex::Regex::new(r"\d+").unwrap();
     let symbols = ['#', '$', '%', '&', '*', '+', '-', '/', '=', '@'];

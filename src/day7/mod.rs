@@ -147,7 +147,7 @@ pub(crate) async fn day7(data: Option<String>, jokers_wild: bool) -> i32 {
         card_order.insert("J", 0);
     }
 
-    let data = data.unwrap_or_else(|| fs::read_to_string("src/data/7.txt").unwrap());
+    let data = data.unwrap_or_else(|| fs::read_to_string("src/day7/data/main.txt").unwrap());
 
     let mut hands = Vec::new();
     for line in data.lines() {

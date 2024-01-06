@@ -59,7 +59,7 @@ pub(crate) fn process_lines(line: &str, part2: bool) -> i32 {
 }
 
 pub(crate) fn day1(part2: bool) -> i32 {
-    let data = fs::read_to_string("src/data/1.txt").unwrap();
+    let data = fs::read_to_string("src/day1/data/main.txt").unwrap();
 
     let mut nums: Vec<i32> = vec![];
     for line in data.lines() {

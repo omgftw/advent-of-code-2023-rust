@@ -7,7 +7,7 @@ struct Card {
 }
 
 pub(crate) fn day4(data: Option<String>) -> (i32, i32) {
-    let data = data.unwrap_or_else(|| fs::read_to_string("src/data/4.txt").unwrap());
+    let data = data.unwrap_or_else(|| fs::read_to_string("src/day4/data/main.txt").unwrap());
 
     let mut total_score = 0;
     let mut all_cards_count = 0;

@@ -8,6 +8,7 @@ mod day7;
 mod day8;
 mod day9;
 mod day10;
+mod helpers;
 #[cfg(test)]
 mod tests;
 
@@ -16,6 +17,8 @@ use clap::Parser;
 
 #[derive(Debug, Parser)]
 struct Args {
+    #[arg(short, long)]
+    debug: bool,
     #[arg(long)]
     single: bool,
     #[arg(long)]
@@ -43,6 +46,10 @@ struct Args {
 #[tokio::main]
 async fn main() {
     let args = Args::parse();
+    if args.debug {
+        std::env::set_var("RUST_LOG", "debug");
+    }
+    env_logger::init();
 
     if !args.single || args.day1 {
         // Day 1 Part 1

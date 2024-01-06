@@ -1,7 +1,7 @@
 use std::fs;
 
 pub(crate) async fn day9(data: Option<String>) -> (i32, i32) {
-    let data = data.unwrap_or_else(|| fs::read_to_string("src/data/9.txt").unwrap());
+    let data = data.unwrap_or_else(|| fs::read_to_string("src/day9/data/main.txt").unwrap());
 
     let histories = data.lines().collect::<Vec<&str>>();
     let mut histories_deltas = Vec::new();
