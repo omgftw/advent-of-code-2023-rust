@@ -9,8 +9,6 @@ mod day7;
 mod day8;
 mod day9;
 mod helpers;
-#[cfg(test)]
-mod tests;
 
 use clap::Parser;
 

@@ -1,3 +1,6 @@
+#[cfg(test)]
+mod tests;
+
 use num_integer::lcm;
 use std::collections::HashMap;
 use std::fs;

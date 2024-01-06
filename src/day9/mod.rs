@@ -1,3 +1,6 @@
+#[cfg(test)]
+mod tests;
+
 use std::fs;
 
 pub(crate) async fn day9(data: Option<String>) -> (i32, i32) {

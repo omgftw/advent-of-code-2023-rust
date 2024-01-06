@@ -1,5 +1,7 @@
 mod helpers;
 mod polygon;
+#[cfg(test)]
+mod tests;
 
 use crate::day10::helpers::{
     find_point, points_inside_polygon, shoelace_formula, translate_symbols,

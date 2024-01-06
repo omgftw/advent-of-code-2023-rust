@@ -2,6 +2,9 @@ use lazy_static::lazy_static;
 use std::collections::HashMap;
 use std::fs;
 
+#[cfg(test)]
+mod tests;
+
 lazy_static! {
     static ref WORDS: HashMap<&'static str, i32> = {
         let mut m = HashMap::new();
