@@ -212,8 +212,18 @@ mod aoc_tests {
         let result = day10::day10(Some(test_data)).await;
 
         // Part 1
-        assert_eq!(result.0, 8);
+        assert_eq!(result.0, 80);
         // Part 2
-        // assert_eq!(part2, 19208);
+        assert_eq!(result.1, 10);
+    }
+
+    #[tokio::test]
+    async fn test_day10() {
+        let result = day10::day10(None).await;
+
+        // Part 1
+        assert_eq!(result.0, 6599);
+        // Part 2
+        assert_eq!(result.1, 477);
     }
 }
