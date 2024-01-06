@@ -1,14 +1,12 @@
+use num_integer::lcm;
 use std::collections::HashMap;
 use std::fs;
-use num_integer::lcm;
 
 pub(crate) async fn day8(data: Option<String>, part2: bool) -> i64 {
     let data = data.unwrap_or_else(|| fs::read_to_string("src/day8/data/main.txt").unwrap());
 
     let parts = data.split("\n\n").collect::<Vec<&str>>();
-    let instructions = parts[0]
-        .replace('L', "0")
-        .replace('R', "1");
+    let instructions = parts[0].replace('L', "0").replace('R', "1");
     let instructions = instructions
         .chars()
         .map(|c| c.to_digit(2).unwrap() as usize);

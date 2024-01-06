@@ -50,7 +50,11 @@ lazy_static! {
 }
 
 impl Hand {
-    fn partial_cmp(&self, other: &Self, card_order: &HashMap<&str, usize>) -> Option<std::cmp::Ordering> {
+    fn partial_cmp(
+        &self,
+        other: &Self,
+        card_order: &HashMap<&str, usize>,
+    ) -> Option<std::cmp::Ordering> {
         let self_index = CARD_TYPE_ORDER.get(self.hand_type.as_str()).unwrap();
         let other_index = CARD_TYPE_ORDER.get(other.hand_type.as_str()).unwrap();
         match self_index.cmp(other_index) {
