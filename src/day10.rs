@@ -156,43 +156,11 @@ pub(crate) async fn day10(data: Option<String>) -> (i32, i32) {
         new_matrix[pipe.y as usize][pipe.x as usize] = cur_char;
     }
 
-    // sort by y and then x
-    let mut sorted_points = pipes.points.clone();
-    sorted_points.sort_by(|a, b| {
-        if a.y == b.y {
-            a.x.cmp(&b.x)
-        } else {
-            a.y.cmp(&b.y)
-        }
-    });
-
-    // iterate over each point in the matrix
-    let mut internal_count = 0;
-    let min_y = sorted_points[0].y;
-    let max_y = sorted_points[sorted_points.len() - 1].y;
-    for y in min_y..=max_y {
-        let pipe_line =  sorted_points.iter().filter(|p| p.y == y).collect::<Vec<&Point>>();
-        let min_x = pipe_line[0].x;
-        let max_x = pipe_line[pipe_line.len() - 1].x;
-        for x in min_x..=max_x {
-            if  sorted_points.contains(&(x, y).into()) {
-                continue;
-            }
-            if pipes.contains(&(x, y).into()) {
-                internal_count += 1;
-                new_matrix[y as usize][x as usize] = 'X';
-            }
-        }
-    }
-
-    // print the new matrix
-    for line in new_matrix.iter() {
-        for ch in line.iter() {
-            print!("{}", ch);
-        }
-        println!();
-    }
+    let area = shoelace_formula(&pipes.points);
+    let len = pipes.points.len();
+    let len = ((len as f32 - 1_f32) / 2f32).floor();
+    let area = area - len as f64;
 
     let val = pipes.points.len() as f32 / 2f32;
-    (val.ceil() as i32, internal_count)
+    (val.ceil() as i32, area as i32)
 }
