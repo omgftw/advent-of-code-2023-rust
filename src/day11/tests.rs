@@ -1,5 +1,5 @@
-use std::fs;
 use crate::day11::day11;
+use std::fs;
 
 #[tokio::test]
 async fn test_day11_test_data() {
