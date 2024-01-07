@@ -121,8 +121,9 @@ async fn main() {
 
     if !args.single || args.day11 {
         // Day 11
-        let day11 = day11::day11(None);
-        println!("Day 11 Part 1: {}", day11.0);
-        println!("Day 11 Part 2: {}", day11.1);
+        let day11_part1 = day11::day11(None, 1);
+        let day11_part2 = day11::day11(None, 999_999);
+        println!("Day 11 Part 1: {}", day11_part1);
+        println!("Day 11 Part 2: {}", day11_part2);
     }
 }
